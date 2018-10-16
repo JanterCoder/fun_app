@@ -3,31 +3,31 @@
     <!-- 顶部 Header 区域 -->
     <mt-header fixed title="最新资讯">
       <span slot="left" @click="goBack" v-show="flag">
-        <mt-button icon="back"></mt-button>
+        <mt-button icon="back">返回</mt-button>
       </span>
     </mt-header>
 
     <!-- 中间的 路由 router-view 区域 -->
-    <h1>根组件</h1>
+    <router-view></router-view>
 
     <!-- 底部 Tabbar 区域 -->
     <nav class="mui-bar mui-bar-tab">
-			<a class="mui-tab-item mui-active" href="#tabbar">
-				<span class="mui-icon mui-icon-home"></span>
-				<span class="mui-tab-label">首页</span>
-			</a>
-			<a class="mui-tab-item" href="#tabbar-with-chat">
-				<span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
-				<span class="mui-tab-label">消息</span>
-			</a>
-			<a class="mui-tab-item" href="#tabbar-with-contact">
-				<span class="mui-icon mui-icon-contact"></span>
-				<span class="mui-tab-label">通讯录</span>
-			</a>
-			<a class="mui-tab-item" href="#tabbar-with-map">
-				<span class="mui-icon mui-icon-gear"></span>
-				<span class="mui-tab-label">设置</span>
-			</a>
+			<router-link class="mui-tab-item" to="/news">
+				<span class="mui-icon icon-xinwen"></span>
+				<span class="mui-tab-label">资讯</span>
+			</router-link>
+			<router-link class="mui-tab-item" to="/picture">
+				<span class="mui-icon icon-tupian1"><!--<span class="mui-badge">9</span>--></span>
+				<span class="mui-tab-label">图片</span>
+			</router-link>
+			<router-link class="mui-tab-item" to="/service">
+				<span class="mui-icon icon-fuwu"></span>
+				<span class="mui-tab-label">服务</span>
+			</router-link>
+			<router-link class="mui-tab-item" to="/myself">
+				<span class="mui-icon icon-gerentouxiang"></span>
+				<span class="mui-tab-label">我的</span>
+			</router-link>
 		</nav>
 
      
@@ -43,7 +43,7 @@ export default {
     };
   },
   created() {
-    this.flag = this.$route.path === "/home" ? false : true;
+    this.flag = this.$route.path === "/news" ? false : true;
   },
   methods: {
    goBack() {
