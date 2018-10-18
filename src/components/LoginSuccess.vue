@@ -2,7 +2,7 @@
   <div class="myContainer">
     <ul class="mui-table-view mui-table-view-chevron">
       <li class="mui-table-view-cell mui-media">
-        <router-link class="mui-navigate-right" to="/myself/login">
+        <router-link class="mui-navigate-right" to="/user/login">
           <img class="mui-media-object mui-pull-left head-img" id="head-img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539697807128&di=380cf5d559d3db6adcd2dd89141c8419&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01786557e4a6fa0000018c1bf080ca.png">
           <div class="mui-media-body">
             janter

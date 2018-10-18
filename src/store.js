@@ -11,12 +11,12 @@ export default new Vuex.Store({
   mutations: {
     loginFuc: (state) => {
       console.log(this); //undefined?????
-      this.$router.push({ name: 'myself' });
+      this.$router.push({ name: 'user' });
     },
     loginSuc: (state, ld) => {
       state.loginFlag = true;
       state.userInfo = ld;
-      this.$router.push({ name: 'myself' })
+      this.$router.push({ name: 'user' })
     }
   },
   actions: {

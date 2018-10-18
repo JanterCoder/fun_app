@@ -25,7 +25,7 @@
         <span class="mui-icon icon-fuwu"></span>
         <span class="mui-tab-label">服务</span>
       </router-link>
-      <router-link class="mui-tab-item" to="/myself">
+      <router-link class="mui-tab-item" to="/user">
         <span class="mui-icon icon-gerentouxiang"></span>
         <span class="mui-tab-label">我的</span>
       </router-link>
@@ -43,17 +43,17 @@ export default {
     };
   },
   created() {
-    this.flag = this.$route.path === "/news" || this.$route.path === "/picture" || this.$route.path === "/myself" || this.$route.path === "/service" ? false : true;
+    this.flag = this.$route.path === "/news" || this.$route.path === "/picture" || this.$route.path === "/user" || this.$route.path === "/service" ? false : true;
   },
   methods: {
     goBack() {
       this.$router.go(-1);
-      console.log(this);
+      // console.log(this);
     }
   },
   watch: {
     "$route.path": function(newVal) {
-      if (newVal === "/news" || newVal === "/picture" || newVal === "/myself" || newVal === "/service") {
+      if (newVal === "/news" || newVal === "/picture" || newVal === "/user" || newVal === "/service") {
         this.flag = false;
       } else {
         this.flag = true;

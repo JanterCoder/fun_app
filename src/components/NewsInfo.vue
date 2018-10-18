@@ -4,18 +4,18 @@
       <h3 class="title">{{ newsInfo.title }}</h3>
 
       <div class="subtitle">
-        <div class="avatar">
+        <router-link :to="'/userInfo/' + newsInfo.author.loginname"  class="avatar" tag="div">
           <img :src="newsInfo.author.avatar_url">
           <span>{{ newsInfo.author.loginname }}</span>
-        </div>
-        <span>发布于 {{ newsInfo.create_at | dateFormat('YYYY-MM-DD  HH:mm') }}</span>
+        </router-link>
+        <span>发布于 {{ newsInfo.create_at | dateFormat('YYYY-MM-DD HH:mm') }}</span>
       </div>
 
       <div class="content" v-html="newsInfo.content"></div>
     </div>
-    
+
     <!-- 回复子组件 -->
-    <reply :id = "this.id" :newsInfo = "this,newsInfo"></reply>
+    <reply :id="this.id" :newsInfo="this,newsInfo"></reply>
   </div>
 </template>
 
@@ -41,7 +41,11 @@ export default {
           if (result.body.success == true) {
             this.newsInfo = result.body.data;
           } else {
-            Toast("获取资讯详情失败");
+            Toast({
+                message: "获取咨讯详情失败",
+                position: "middle",
+                duration: 1000
+              });
           }
         });
     }

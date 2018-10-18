@@ -29,7 +29,6 @@ export default {
     //   this.$store.dispatch("loginFuc", this.userInfo);
     // }
     login() {
-      // console.log(this.userInfo);
       if (this.userInfo.accesstoken.trim().length === 0) {
         return Toast({
           message: "请输入用户名",
@@ -53,7 +52,7 @@ export default {
               });
               setTimeout(() => {
                 this.$router.push({
-                  name: "myself",
+                  name: "user",
                 });
               }, 1500);
             } else {

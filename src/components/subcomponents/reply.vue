@@ -4,9 +4,11 @@
     <div class="reply-list">
       <div class="reply-item" v-for="(item, i) in replyList" :key="item.id">
         <div class="reply-title">
-          <img :src="item.author.avatar_url">
-          <span class="loginname">{{ item.author.loginname }}</span>
-          <span class="time">{{ i+1 }}楼·{{ item.create_at | dateFormat('YYYY-MM-DD  HH:mm') }}</span>
+          <router-link :to="'/userInfo/' + item.author.loginname" class="user" tag="div" >
+            <img :src="item.author.avatar_url">
+            <span class="loginname">{{ item.author.loginname }}</span>
+          </router-link>
+          <span class="time">{{ i+1 }}楼·{{ item.create_at | dateFormat('YYYY-MM-DD HH:mm') }}</span>
           <span class="author" v-show="item.author.loginname == newsInfo.author.loginname ? true : false">作者</span>
         </div>
         <div class="reply-body" v-html="item.content"></div>
@@ -17,19 +19,20 @@
 
 <script>
 import { Toast } from "mint-ui";
-  export default {
-    data() {
-      return {
-        // id: this.$route.params.id,
-        replyList: [],
-      }
-    },
-    created() {
-      this.getReplyList();
-    },
-    methods: {
-      getReplyList() {
-        this.$http.get("https://cnodejs.org/api/v1/topic/" + this.id)
+export default {
+  data() {
+    return {
+      // id: this.$route.params.id,
+      replyList: []
+    };
+  },
+  created() {
+    this.getReplyList();
+  },
+  methods: {
+    getReplyList() {
+      this.$http
+        .get("https://cnodejs.org/api/v1/topic/" + this.id)
         .then(result => {
           if (result.body.success == true) {
             this.replyList = result.body.data.replies;
@@ -39,10 +42,10 @@ import { Toast } from "mint-ui";
             Toast("获取资讯详情失败");
           }
         });
-      }
-    },
-    props: ["id","newsInfo"]
-  }
+    }
+  },
+  props: ["id", "newsInfo"]
+};
 </script>
 
 <style lang="scss">
@@ -60,16 +63,19 @@ import { Toast } from "mint-ui";
       font-size: 12px;
       border-bottom: 1px solid #dedede;
       padding: 10px;
-      img {
-        width: 22px;
-        height: 22px;
-        border-radius: 3px;
-        vertical-align: top;
-      }
-      .loginname {
-        padding-left: 5px;
-        font-weight: 600;
-        color: #333;
+      .user {
+        display: inline-block;
+        img {
+          width: 22px;
+          height: 22px;
+          border-radius: 3px;
+          vertical-align: top;
+        }
+        .loginname {
+          padding-left: 5px;
+          font-weight: 600;
+          color: #333;
+        }
       }
       .time {
         color: #098eff;
