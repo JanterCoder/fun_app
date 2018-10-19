@@ -21,10 +21,10 @@
           <!--<span class="mui-badge">9</span>--></span>
         <span class="mui-tab-label">图片</span>
       </router-link>
-      <router-link class="mui-tab-item" to="/service">
+      <!-- <router-link class="mui-tab-item" to="/service">
         <span class="mui-icon icon-fuwu"></span>
         <span class="mui-tab-label">服务</span>
-      </router-link>
+      </router-link> -->
       <router-link class="mui-tab-item" to="/user">
         <span class="mui-icon icon-gerentouxiang"></span>
         <span class="mui-tab-label">我的</span>

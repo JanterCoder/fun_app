@@ -8,6 +8,7 @@ Vue.use(VueRouter);
 
 // import { Header } from 'mint-ui';
 // Vue.component(Header.name, Header);
+// 图片懒加载必须是全局注册，不能按需引入
 import MintUI from 'mint-ui';
 Vue.use(MintUI);
 import 'mint-ui/lib/style.css';
@@ -30,6 +31,10 @@ Vue.filter('dateFormat', function (dataStr, pattern = 'YYYY-MM-DD  HH:mm:ss') {
   // return moment(dataStr).format(pattern);
   return moment(dataStr, pattern).fromNow();
 })
+
+// 安装 图片预览插件
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
 
 // import store from './store.js';
 

@@ -7,6 +7,7 @@ import User from './components/tabbar/User.vue';
 import NewsInfo from './components/NewsInfo.vue';
 import Login from './components/Login.vue';
 import UserInfo from './components/UserInfo.vue';
+import PictureInfo from './components/PictureInfo.vue';
 
 
 // 3. 创建路由对象
@@ -19,7 +20,8 @@ var router = new VueRouter({
     { path: '/user', component: User, name: 'user' },
     { path: '/news/newsInfo/:id', component: NewsInfo},
     { path: '/user/login', component: Login},
-    { path: '/userInfo/:loginname', component: UserInfo }
+    { path: '/userInfo/:loginname', component: UserInfo },
+    { path: '/picture/pictureInfo', component: PictureInfo }
   ],
   linkActiveClass: 'mui-active' // 覆盖默认的路由高亮的类，默认的类叫做 router-link-active
 })

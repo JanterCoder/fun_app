@@ -2,7 +2,7 @@
   <div class="myContainer">
     <h1>乐趣生活</h1>
     <form>
-      <input type="text" placeholder="用户名" v-model="userInfo.accesstoken">
+      <input type="password" placeholder="用户名" v-model="userInfo.accesstoken">
       <mt-button type="primary" size="large" class="loginBtn" @click="login">登录</mt-button>
     </form>
   </div>
@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       userInfo: {
-        accesstoken: ""
+        accesstoken: "4469d240-a644-4599-a6df-5bcb83382c29"
       }
     };
   },
