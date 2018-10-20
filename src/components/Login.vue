@@ -2,7 +2,7 @@
   <div class="myContainer">
     <h1>乐趣生活</h1>
     <form>
-      <input type="password" placeholder="用户名" v-model="userInfo.accesstoken">
+      <input type="text" placeholder="accessToken" v-model="userInfo.accesstoken">
       <mt-button type="primary" size="large" class="loginBtn" @click="login">登录</mt-button>
     </form>
   </div>

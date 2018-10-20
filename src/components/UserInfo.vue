@@ -94,6 +94,7 @@ export default {
     p {
       margin: 0;
       font-size: 12px;
+      color: #999;
     }
     i {
       font-style: normal;

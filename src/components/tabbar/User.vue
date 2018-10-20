@@ -12,7 +12,8 @@
             <span v-else>
               <router-link to="/user/login" tag="span">点击登录</router-link>
             </span>
-            <p class='mui-ellipsis slogan'>登录乐趣开启新生活</p>
+            <p class='mui-ellipsis slogan'  v-if="loginname">乐趣生活 生活乐趣</p>
+            <p class='mui-ellipsis slogan' v-else>登录乐趣开启新生活</p>
           </div>
         </div>
       </li>
