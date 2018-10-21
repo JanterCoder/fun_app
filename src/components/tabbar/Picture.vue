@@ -1,11 +1,33 @@
 <template>
-  <div>
-    <router-link class="photoList" to='/picture/pictureInfo' tag="ul">
-      <li v-for="item in photoList" :key="item.channel_id">
-        <img v-lazy="item.cover_middle">
-        <div>{{ item.name }}</div>
-      </li>
-    </router-link>
+  <div class="page-loadmore">
+
+    <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
+      <mt-loadmore :autoFill="false" :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" @translate-change="translateChange" @top-status-change="handleTopChange" @bottom-status-change="handleBottomChange" ref="loadmore">
+
+        <router-link class="photoList" to='/picture/pictureInfo' tag="ul">
+          <li v-for="item in photoList" :key="item.channel_id" class="page-loadmore-listitem">
+            <img v-lazy="item.cover_middle">
+            <div>{{ item.name }}</div>
+          </li>
+        </router-link>
+
+        <div slot="top" class="mint-loadmore-top">
+          <span v-show="topStatus !== 'loading'" :class="{ 'is-rotate': topStatus === 'drop' }">↓</span>
+          <span v-show="topStatus === 'loading'">
+            <mt-spinner type="snake"></mt-spinner>
+          </span>
+        </div>
+
+        <div slot="bottom" class="mint-loadmore-bottom">
+          <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+          <span v-show="bottomStatus === 'loading'">
+            <mt-spinner type="snake"></mt-spinner>
+          </span>
+        </div>
+
+      </mt-loadmore>
+    </div>
+
   </div>
 </template>
 
@@ -13,20 +35,80 @@
 export default {
   data() {
     return {
-      photoList: []
+      photoList: [],
+      pageSize: 8,
+      pageNum: 1,
+      allLoaded: false,
+      bottomStatus: "",
+      wrapperHeight: 0,
+      topStatus: "",
+      translate: 0,
+      moveTranslate: 0
     };
   },
   created() {
     this.getphotoList();
   },
+  mounted() {
+    this.wrapperHeight =
+      document.documentElement.clientHeight -
+      this.$refs.wrapper.getBoundingClientRect().top;
+  },
   methods: {
+    handleBottomChange(status) {
+      this.bottomStatus = status;
+    },
+    //上拉执行
+    loadBottom() {
+      setTimeout(() => {
+        this.$http
+          .get("http://api.jirengu.com/fm/getChannels.php")
+          .then(result => {
+            let num = result.body.channels.length / this.pageSize;
+            if (this.pageNum >= num) {
+              this.allLoaded = true;
+            } else {
+              this.$http
+                .get("http://api.jirengu.com/fm/getChannels.php")
+                .then(result => {
+                  let data = result.body.channels.slice(
+                    this.pageSize * this.pageNum,
+                    this.pageSize * (this.pageNum + 1)
+                  );
+                  this.photoList = this.photoList.concat(data);
+                  this.pageNum++;
+                });
+            }
+          });
+        this.$refs.loadmore.onBottomLoaded();
+      }, 1500);
+    },
+    handleTopChange(status) {
+      this.moveTranslate = 1;
+      this.topStatus = status;
+    },
+    translateChange(translate) {
+      const translateNum = +translate;
+      this.translate = translateNum.toFixed(2);
+      this.moveTranslate = (1 + translateNum / 70).toFixed(2);
+    },
+    // 下拉执行
+    loadTop() {
+      setTimeout(() => {
+        this.getphotoList();
+        this.$refs.loadmore.onTopLoaded();
+      }, 1500);
+    },
+
     getphotoList() {
       this.$http
         .get("http://api.jirengu.com/fm/getChannels.php")
         .then(result => {
           // console.log(result.body);
-          this.photoList = result.body.channels;
+          this.photoList = result.body.channels.slice(0, this.pageSize);
         });
+      this.pageNum = 1;
+      this.scrollState = true;
     }
   }
 };
@@ -63,6 +145,42 @@ export default {
     height: 300px;
     margin: auto;
   }
+}
+
+.loading-background,
+.mint-loadmore-top span {
+  -webkit-transition: 0.2s linear;
+  transition: 0.2s linear;
+}
+.mint-loadmore-top span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.mint-loadmore-top span.is-rotate {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.page-loadmore .mint-spinner {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.page-loadmore-wrapper {
+  overflow: auto;
+}
+
+.mint-loadmore-bottom span {
+  display: inline-block;
+  -webkit-transition: 0.2s linear;
+  transition: 0.2s linear;
+  vertical-align: middle;
+}
+
+.mint-loadmore-bottom span.is-rotate {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 </style>
 

@@ -49,17 +49,17 @@
 
 <script>
 import { Toast } from "mint-ui";
-
 import mui from "../../lib/mui/js/mui.min.js";
 
 export default {
   data() {
     return {
-      newsList: []
+      newsList: [],
+      pageSize: 40
     };
   },
   created() {
-    this.getNewsList('');
+    this.getNewsList("");
   },
   mounted() {
     // 当 组件中的DOM结构被渲染好并放到页面中后，会执行这个 钩子函数
@@ -71,13 +71,24 @@ export default {
   },
   methods: {
     getNewsList(cateId) {
-      this.$http.get("https://cnodejs.org/api/v1/topics?limit=40&tab=" + cateId).then(result => {
-        if (result.body.success == true) {
-          this.newsList = result.body.data;
-        } else {
-          Toast("获取资讯列表失败！");
-        }
-      });
+      this.$http
+        .get(
+          "https://cnodejs.org/api/v1/topics?limit=" +
+            this.pageSize +
+            "&tab=" +
+            cateId
+        )
+        .then(result => {
+          if (result.body.success == true) {
+            this.newsList = result.body.data;
+          } else {
+            Toast({
+              message: "获取资讯列表失败！",
+              position: "middle",
+              duration: 1000
+            });
+          }
+        });
     }
   }
 };

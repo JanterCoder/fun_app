@@ -58,6 +58,7 @@ export default {
 
 <style lang="scss">
 .newsInfo {
+  overflow: auto;
   .main {
     padding: 10px;
     .title {
